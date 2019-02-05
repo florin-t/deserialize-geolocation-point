@@ -1,5 +1,6 @@
 package com.playground.springplayground;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.playground.springplayground.db.entities.MagicPoint;
@@ -23,8 +24,9 @@ public class GreetingController {
     @RequestMapping("/greeting")
     public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
 
-        MagicPoint magicPoint = magicPointRepository.getAllByDescription("Abc");
-        log.info(magicPoint.getDescription());
+        List<MagicPoint> magicPoints = magicPointRepository.getAllByDescription("Abc");
+        if(magicPoints.size() > 0)
+        log.info(magicPoints.get(0).getDescription());
         return new Greeting(counter.incrementAndGet(),
                 String.format(template, name));
     }
